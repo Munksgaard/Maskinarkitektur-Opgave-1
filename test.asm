@@ -14,4 +14,15 @@ slt   $11, $2, $5      # $11 = 12 < 11 = 0
 slt   $12, $5, $2      # $12 = 11 < 12 = 1
 andi  $13, $2, 0x6     # $13 = 1100 and 0110 = 0x4
 andi  $14, $0, 0xffff  # $14 = 0 and 0xffff = 0x0
+sw    $7, 4($1)        # store the contents of $7 (0x9) in memory 0x4
+lw    $15, 4($1)       # read memory 0x4 into register 15 (9)
+slti  $16, $2, 0xa     # $16 = 12 < 10 = 0
+slti  $17, $2, 0xff  # $17 = 12 < 0xff = 1
 
+addu $18, $1, $0       # load contents of $1 into $18, $18 = 1
+Loop:   addiu $18, $18, 0x1     # add one to $18
+        slti $19, $18, 0x5      # exit loop if we've reached 5
+        beq $19, $zero, Exit
+        beq $zero, $zero, Loop
+
+Exit:   
