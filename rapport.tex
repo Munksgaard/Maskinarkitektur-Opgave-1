@@ -12,7 +12,7 @@
 \usepackage{color}
 
 \pagestyle{fancy}
-\fancyhead[LO]{Philip Munksgaard}
+\fancyhead[LO]{Michael Thulin, Philip Munksgaard}
 \fancyhead[RO]{Maskinarkitektur: G-Opgave 1}
 \fancyfoot[CO]{\thepage}
 
@@ -68,11 +68,15 @@ Vi valgte at tage udgangspunkt i figur 4.17 i COD. Vi har desuden
 valgt, ikke at bruge vores egen ALU, men den ALU der fulgte med
 logisim.
 
-\subsection*{16-32 bit sign extender}
+\subsection*{16-32 bit extender}
 Vi startede derfor med at implementere vores 16-32 sign
 extender. Dette gjorde vi ved at tage den mest betydende bit i
 input-værdien og kopiere den ud på de 16 mest betydende bits i
-output-værdien.
+output-værdien.\\
+Udover en sign extender havde vi også brug for en zero extender, så vi
+valgte at bygge den ind i vores extender-komponent. Hvis SignExtend?
+er sat sign extender vi, og ellers bliver tallet zero extendet.
+
 
 \begin{figure}[h!]
   \centering  
@@ -90,7 +94,14 @@ til ALU operationer. \\
 Af denne grund kunne vi simplificere vores ALUOp controllines, således
 at alle R-instruktioner fik ALUOp 1 og resten af instruktionerne fik
 ALUOp 0. Det vil altså sige, at vi har lavet en lille smule om i
-forhold til implementationen i bogen.
+forhold til implementationen i bogen. \\
+Desuden skulle vi afgøre, for hver instruktion, om der skal sign
+extendes eller zero extendes. Vi har fulgt det der står i MIPS
+instruktionsarket forrest i COD. Eneste instruktion der var lidt tvivl
+om var beq, men da beq fungerer ved at springe relativt i forhold til
+det aktuelle instruction count, er det nødvendigt at den kan springe
+baglæns, hvorfor BranchAddr skal kunne være negativ. Derfor skulle
+BranchAddr sign extendes.
 
 \begin{figure}[h!]
   \centering  
